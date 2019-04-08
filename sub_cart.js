@@ -44,7 +44,7 @@ function addItem(e) {
       var foodID = foodItem.id;
 
       // Creates a copy of the foodItem 
-      var foodDescription = foodItem.cloneNode();
+      var foodDescription = foodItem.cloneNode(true);
 
       // Gets the shopping cart by its ID 
       var cartBox = document.getElementById("cart");
@@ -52,14 +52,16 @@ function addItem(e) {
       // Tests whether the customer has already ordered this product 
       var duplicateOrder = false;
 
-      console.log(cartBox.firstElementChild.nodeValue++)
       // Loops through the element child nodes of cartBox 
       for (var i = 0; i < cartBox.childNodes.length; i++) {
             // Checks if the ID of the element node is equal to foodID 
-            if (cartBox.childNodes[i].id = foodID) {
-                  // Increases the value of the first element child of node by 1 
-                  // wat 
-                  cartBox.firstElementChild.nodeValue += 1;
+            if (cartBox.childNodes[i].id === foodID) {
+                  // // Increases the value of the first element child of node by 1 
+                  cartBox.childNodes[i].firstElementChild.textContent++;
+
+                  // Changes dupliacteOrder to true so the order isn't added to cartBox twice 
+                  duplicateOrder = true;
+
                   break;
             }
       }
@@ -70,11 +72,10 @@ function addItem(e) {
             var orderCount = document.createElement("span");
 
             // Sets the text content of the orderCount element to 1 
-            orderCount.innerText = 1;
+            orderCount.textContent = 1;
 
             // Inserts orderCount as the first child of the foodDescription node 
-            // i dont like this 
-            foodDescription.insertBefore(orderCount, foodDescription);
+            foodDescription.prepend(orderCount);
 
             // Appends foodDescriptino to cartBox as a new product order 
             cartBox.appendChild(foodDescription);
